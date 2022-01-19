@@ -4,6 +4,8 @@
  */
 package unocardgame;
 
+import deck.Deck;
+
 /**
  *
  * @author nishino
@@ -15,7 +17,8 @@ public class UnoCardGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Hello world!");
+        Deck table = new Deck(true);
+        table.showFullDeck();
     }
     
 }
