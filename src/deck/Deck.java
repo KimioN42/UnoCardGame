@@ -4,61 +4,97 @@
  */
 package deck;
 
-import java.util.Arrays;
-import deck.DeckDivision;
+import deck.Card;
+import deck.CardProperties;
 
 /**
  *
  * @author nishino
- * Class that contains all of the cards in a Uno Card Game. 
- * A UNO deck consists of 108 cards, of which there are 76 Number cards, 24 Action cards and 8 Wild cards.
- * UNO cards have four color "suits", which are red, yellow, blue and green.
- * 
  */
 public class Deck {
+    private Card[] fullDeck = new Card[108];
     
-    private boolean fullDeck[][] = new boolean[18][];
-
     
-    //constructor for the deck, should set every card in the deck to true or false
-    //depending on if it is initialized on the table or on the player
+    //constructor to initialize whole deck
+    //init variable tells if it should start the deck with all cards discarded or not
     public Deck(boolean init) {
-        fullDeck[DeckDivision.red] = new boolean[19];
-        fullDeck[DeckDivision.green] = new boolean[19];
-        fullDeck[DeckDivision.blue] = new boolean[19];
-        fullDeck[DeckDivision.yellow] = new boolean[19];
-        
-        fullDeck[DeckDivision.actionRed2] = new boolean[2];
-        fullDeck[DeckDivision.actionGreen2] = new boolean[2];
-        fullDeck[DeckDivision.actionBlue2] = new boolean[2];
-        fullDeck[DeckDivision.actionYellow2] = new boolean[2];
-        
-        fullDeck[DeckDivision.actionRedSkip] = new boolean[2];
-        fullDeck[DeckDivision.actionGreenSkip] = new boolean[2];
-        fullDeck[DeckDivision.actionBlueSkip] = new boolean[2];
-        fullDeck[DeckDivision.actionYellowSkip] = new boolean[2];
-        
-        fullDeck[DeckDivision.actionRedReverse] = new boolean[2];
-        fullDeck[DeckDivision.actionGreenReverse] = new boolean[2];
-        fullDeck[DeckDivision.actionBlueReverse] = new boolean[2];
-        fullDeck[DeckDivision.actionYellowReverse] = new boolean[2];
-        
-        fullDeck[DeckDivision.actionWild] = new boolean[4];
-        fullDeck[DeckDivision.actionWildDraw4] = new boolean[4];
-        
-        for(int i = 0; i < 18; i++) {
-            Arrays.fill(fullDeck[i], init);
+        for(int i=0; i<fullDeck.length; i++) {
+            //setting up colored number cards
+            if(i<76) {
+                //setting up red numbered cards
+                if(i<19){
+                    if(i<10)
+                        fullDeck[i] = new Card(i,CardProperties.RED, false, CardProperties.COLOR_CARD, init);
+                    else
+                        fullDeck[i] = new Card((i-9),CardProperties.RED, false, CardProperties.COLOR_CARD, init);
+                } 
+                //setting up green numbered cards
+                else if (i<38){
+                    if(i<29)
+                        fullDeck[i] = new Card((i-19),CardProperties.GREEN, false, CardProperties.COLOR_CARD, init);
+                    else
+                        fullDeck[i] = new Card((i-28),CardProperties.GREEN, false, CardProperties.COLOR_CARD, init);
+                }
+                //setting up blue numbered cards
+                else if (i<57) {
+                    if(i<48)
+                        fullDeck[i] = new Card((i-38),CardProperties.BLUE, false, CardProperties.COLOR_CARD, init);
+                    else
+                        fullDeck[i] = new Card((i-47),CardProperties.BLUE, false, CardProperties.COLOR_CARD, init);
+                }
+                //setting up yellow numbered cards
+                else {
+                    if(i<67)
+                        fullDeck[i] = new Card((i-57),CardProperties.YELLOW, false, CardProperties.COLOR_CARD, init);
+                    else
+                        fullDeck[i] = new Card((i-66),CardProperties.GREEN, false, CardProperties.COLOR_CARD, init);
+                }
+            } //setting up action cards
+            else {
+                //setting up wild cards
+                if(i<80) 
+                    fullDeck[i] = new Card(0, CardProperties.NO_COLOR, true, CardProperties.WILD, init);
+                //setting up wild draw 4 cards
+                else if(i<84) 
+                    fullDeck[i] = new Card(0, CardProperties.NO_COLOR, true, CardProperties.WILD_DRAW4, init);
+                //setting up draw 2 cards
+                else if(i<92) {
+                    if(i<86)
+                        fullDeck[i] = new Card(0, CardProperties.RED, true, CardProperties.DRAW2, init);
+                    else if(i<88)
+                        fullDeck[i] = new Card(0, CardProperties.GREEN, true, CardProperties.DRAW2, init);
+                    else if(i<90)
+                        fullDeck[i] = new Card(0, CardProperties.BLUE, true, CardProperties.DRAW2, init);
+                    else
+                        fullDeck[i] = new Card(0, CardProperties.YELLOW, true, CardProperties.DRAW2, init);
+                }
+                else if(i<100) {
+                    if(i<94)
+                        fullDeck[i] = new Card(0, CardProperties.RED, true, CardProperties.REVERSE, init);
+                    else if(i<96)
+                        fullDeck[i] = new Card(0, CardProperties.GREEN, true, CardProperties.REVERSE, init);
+                    else if(i<98)
+                        fullDeck[i] = new Card(0, CardProperties.BLUE, true, CardProperties.REVERSE, init);
+                    else
+                        fullDeck[i] = new Card(0, CardProperties.YELLOW, true, CardProperties.REVERSE, init);     
+                }
+                else if(i<108) {
+                    if(i<102)
+                        fullDeck[i] = new Card(0, CardProperties.RED, true, CardProperties.SKIP, init);
+                    else if(i<104)
+                        fullDeck[i] = new Card(0, CardProperties.GREEN, true, CardProperties.SKIP, init);
+                    else if(i<106)
+                        fullDeck[i] = new Card(0, CardProperties.BLUE, true, CardProperties.SKIP, init);
+                    else
+                        fullDeck[i] = new Card(0, CardProperties.YELLOW, true, CardProperties.SKIP, init);
+                }
+            }
         }
-        
     }
     
-    public void showFullDeck() {
+    public void printDeck() {
         for (int i = 0; i < fullDeck.length; i++) {
-            System.out.print(DeckDivision.getCardType(i) + " - ");
-            for(int j=0; j < fullDeck[i].length; j++) {
-                System.out.print(fullDeck[i][j] + " ");
-            }
-            System.out.println();
+           System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString());    
         }
     }
     

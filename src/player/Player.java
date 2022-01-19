@@ -4,14 +4,12 @@
  */
 package player;
 
-import deck.Deck;
 
 /**
  *
  * @author nishino
  */
 public class Player {
-    Deck playerDeck = new Deck(false);
     private String name;
     
     public String getName() {
@@ -22,7 +20,7 @@ public class Player {
         this.name = name;
     }
     
-    public void pull() {
+    public void addToHand() {
         
     }
     

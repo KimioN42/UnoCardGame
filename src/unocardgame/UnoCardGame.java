@@ -17,8 +17,8 @@ public class UnoCardGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Deck table = new Deck(true);
-        table.showFullDeck();
+        Deck table = new Deck(false);
+        table.printDeck();
     }
     
 }
