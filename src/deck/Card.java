@@ -28,8 +28,6 @@ public class Card {
     public Card(boolean discarded) {
         this.discarded = discarded;
     }
-
-    
     
     public int getCardNumber() {
         return cardNumber;

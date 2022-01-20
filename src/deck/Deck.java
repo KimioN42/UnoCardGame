@@ -16,12 +16,15 @@ import game.GameException;
  */
 public class Deck {
     private Card[] fullDeck = new Card[108]; 
+    private Card tableCard = new Card(false);
+    private boolean empty;
     private int topOfDeck;
     
     //constructor to initialize whole deck
     //init variable tells if it should start the deck with all cards discarded or not
     public Deck(boolean init) {
         topOfDeck = 0;
+        empty = false;
         for(int i=0; i<fullDeck.length; i++) {
             //setting up colored number cards
             if(i<76) {
@@ -119,6 +122,10 @@ public class Deck {
         }
         topOfDeck = i;    
         System.out.println("New top of the deck: " + topOfDeck);
+        if(topOfDeck >= fullDeck.length) {
+           empty = true;
+            System.out.println("Empty deck");
+        }     
     }
     
     public Card[] pull(int quantity) throws GameException {
@@ -126,17 +133,30 @@ public class Deck {
         Card[] copy = new Card[quantity];
         copy = Arrays.copyOfRange(fullDeck, topOfDeck, end);
         System.out.println("Cards being pulled: ");
-        for(int i=topOfDeck; i < end;i++) {
-            fullDeck[i].setDiscarded(true);
+        for(int i=topOfDeck; i < end;i++) {  
             if(!fullDeck[i].isActionCard())
                 System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString()
                     + ". isDiscarded(): " + fullDeck[i].isDiscarded());  
             else
                 System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", card type: " + fullDeck[i].getCardTypeString() 
                     + ". isDiscarded(): " + fullDeck[i].isDiscarded());      
+            fullDeck[i].setDiscarded(true);
         } 
         updateTop();
         return copy;
     }
+
+    public void setTableCard(Card tableCard) {
+        this.tableCard = tableCard;
+    }
+
+    public Card getTableCard() {
+        return tableCard;
+    }
+
+    public boolean isEmpty() {
+        return empty;
+    }
+    
     
 }

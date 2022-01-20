@@ -4,8 +4,7 @@
  */
 package unocardgame;
 
-import deck.Deck;
-import game.GameException;
+import game.Game;
 
 /**
  *
@@ -17,17 +16,8 @@ public class UnoCardGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Deck table = new Deck(false);
-        table.shuffleDeck();
-        table.printDeck();
-        System.out.println("=====================");
-        try{
-            table.pull(4);
-        } catch (GameException ge) {
-            System.out.println("Game exception generated: " + ge.getCode());        
-        }
-        table.printDeck();
+        Game game = new Game();
+        
         
     }
     
