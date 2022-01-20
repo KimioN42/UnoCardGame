@@ -4,6 +4,7 @@
  */
 package player;
 
+import deck.Card;
 
 /**
  *
@@ -11,6 +12,15 @@ package player;
  */
 public class Player {
     private String name;
+    private Card[] cardsOnHand = new Card[108];
+    
+    
+    public Player() {
+        for(int i=0; i<cardsOnHand.length;i++)
+            cardsOnHand[i] = new Card(true);
+    }
+    
+    
     
     public String getName() {
         return name;
@@ -20,7 +30,7 @@ public class Player {
         this.name = name;
     }
     
-    public void addToHand() {
+    public void addToHand(Card[] arrayOfCards) {
         
     }
     

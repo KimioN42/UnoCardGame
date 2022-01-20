@@ -8,7 +8,7 @@ import deck.Card;
 import deck.CardProperties;
 import java.util.Arrays;
 import java.util.Collections;
-import unocardgame.GameException;
+import game.GameException;
 
 /**
  *
@@ -99,10 +99,13 @@ public class Deck {
     public void printDeck() {
         for (int i = 0; i < fullDeck.length; i++) {
             if(!fullDeck[i].isActionCard())
-                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString());  
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString()
+                    + ". isDiscarded(): " + fullDeck[i].isDiscarded());  
             else
-                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", card type: " + fullDeck[i].getCardTypeString());  
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", card type: " + fullDeck[i].getCardTypeString() 
+                    + ". isDiscarded(): " + fullDeck[i].isDiscarded());  
         }
+        System.out.println("Top of the deck is: "+topOfDeck);
     }
     
     public void shuffleDeck() {
@@ -110,18 +113,29 @@ public class Deck {
     }
     
     public void updateTop() {
-        for(int i=topOfDeck; i<fullDeck.length; i++)
-            if(!fullDeck[i].isDiscarded())
-                topOfDeck = i;            
+        int i = 0;
+        while (fullDeck[i].isDiscarded()) {
+            i++;
+        }
+        topOfDeck = i;    
+        System.out.println("New top of the deck: " + topOfDeck);
     }
     
     public Card[] pull(int quantity) throws GameException {
-        int end = topOfDeck+ quantity - 1;
+        int end = topOfDeck+ quantity;
         Card[] copy = new Card[quantity];
         copy = Arrays.copyOfRange(fullDeck, topOfDeck, end);
-        for(int i=topOfDeck; i< end;i++) {
+        System.out.println("Cards being pulled: ");
+        for(int i=topOfDeck; i < end;i++) {
             fullDeck[i].setDiscarded(true);
-        }
+            if(!fullDeck[i].isActionCard())
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString()
+                    + ". isDiscarded(): " + fullDeck[i].isDiscarded());  
+            else
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", card type: " + fullDeck[i].getCardTypeString() 
+                    + ". isDiscarded(): " + fullDeck[i].isDiscarded());      
+        } 
+        updateTop();
         return copy;
     }
     

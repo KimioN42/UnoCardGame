@@ -5,6 +5,7 @@
 package unocardgame;
 
 import deck.Deck;
+import game.GameException;
 
 /**
  *
@@ -20,6 +21,14 @@ public class UnoCardGame {
         Deck table = new Deck(false);
         table.shuffleDeck();
         table.printDeck();
+        System.out.println("=====================");
+        try{
+            table.pull(4);
+        } catch (GameException ge) {
+            System.out.println("Game exception generated: " + ge.getCode());        
+        }
+        table.printDeck();
+        
     }
     
 }

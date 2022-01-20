@@ -15,7 +15,8 @@ public class Card {
     private boolean actionCard;
     private int cardType;
     private boolean discarded;
-
+    
+    
     public Card(int cardNumber, int cardColor, boolean actionCard, int cardType, boolean discarded) {
         this.cardNumber = cardNumber;
         this.cardColor = cardColor;
@@ -24,6 +25,12 @@ public class Card {
         this.discarded = discarded;
     }
 
+    public Card(boolean discarded) {
+        this.discarded = discarded;
+    }
+
+    
+    
     public int getCardNumber() {
         return cardNumber;
     }
