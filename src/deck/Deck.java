@@ -6,18 +6,22 @@ package deck;
 
 import deck.Card;
 import deck.CardProperties;
+import java.util.Arrays;
+import java.util.Collections;
+import unocardgame.GameException;
 
 /**
  *
  * @author nishino
  */
 public class Deck {
-    private Card[] fullDeck = new Card[108];
-    
+    private Card[] fullDeck = new Card[108]; 
+    private int topOfDeck;
     
     //constructor to initialize whole deck
     //init variable tells if it should start the deck with all cards discarded or not
     public Deck(boolean init) {
+        topOfDeck = 0;
         for(int i=0; i<fullDeck.length; i++) {
             //setting up colored number cards
             if(i<76) {
@@ -94,11 +98,31 @@ public class Deck {
     
     public void printDeck() {
         for (int i = 0; i < fullDeck.length; i++) {
-           System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString());    
+            if(!fullDeck[i].isActionCard())
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", value: " + fullDeck[i].getCardNumber() + ", card type: " + fullDeck[i].getCardTypeString());  
+            else
+                System.out.println("Card " + i + ", color: " + fullDeck[i].getCardColorString() + ", card type: " + fullDeck[i].getCardTypeString());  
         }
     }
     
+    public void shuffleDeck() {
+        Collections.shuffle(Arrays.asList(fullDeck));
+    }
     
+    public void updateTop() {
+        for(int i=topOfDeck; i<fullDeck.length; i++)
+            if(!fullDeck[i].isDiscarded())
+                topOfDeck = i;            
+    }
     
+    public Card[] pull(int quantity) throws GameException {
+        int end = topOfDeck+ quantity - 1;
+        Card[] copy = new Card[quantity];
+        copy = Arrays.copyOfRange(fullDeck, topOfDeck, end);
+        for(int i=topOfDeck; i< end;i++) {
+            fullDeck[i].setDiscarded(true);
+        }
+        return copy;
+    }
     
 }

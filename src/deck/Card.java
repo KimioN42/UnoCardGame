@@ -70,17 +70,6 @@ public class Card {
     public void setDiscarded(boolean discarded) {
         this.discarded = discarded;
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 }

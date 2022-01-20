@@ -18,6 +18,7 @@ public class UnoCardGame {
     public static void main(String[] args) {
         // TODO code application logic here
         Deck table = new Deck(false);
+        table.shuffleDeck();
         table.printDeck();
     }
     
